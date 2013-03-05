@@ -1,0 +1,45 @@
+Options +ExecCGI -Indexes
+DirectoryIndex index.php
+DefaultLanguage en-GB
+AddDefaultCharset UTF-8
+ServerSignature Off
+
+SetEnv TZ Asia/Calcutta
+
+AddType application/x-httpd-php .inc
+AddHandler application/x-httpd-php .inc
+
+IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */_vti*
+
+<Limit GET POST>
+order deny,allow
+deny from all
+allow from all
+</Limit>
+
+<Limit PUT DELETE>
+order deny,allow
+deny from all
+</Limit>
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
+
+
+<filesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh)$">
+  Order Allow,Deny
+  Deny from all
+</filesMatch>
+
+Header set X-UA-Compatible "IE=Edge,chrome=1" env=ie
+
+ErrorDocument 400 /error.php
+ErrorDocument 403 /error.php
+ErrorDocument 404 /error.php
+ErrorDocument 405 /error.php
+ErrorDocument 408 /error.php
+ErrorDocument 500 /error.php
+ErrorDocument 502 /error.php
+ErrorDocument 504 /error.php
